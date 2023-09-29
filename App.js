@@ -1,20 +1,49 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+const Stack = createNativeStackNavigator();
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import {
+  FirstScreen,
+  One_d,
+  One_e,
+  One_a,
+  Two_a,
+  One_b,
+  One_c,
+  XMEye,
+} from "./screens";
 
-export default function App() {
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const App = () => {
+  const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
+  const [fontsLoaded, error] = useFonts({
+    "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
+    "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
+  });
+  if (!fontsLoaded && !error) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <NavigationContainer>
+        {hideSplashScreen ? (
+          <Stack.Navigator
+            initialRouteName="FirstScreen"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="FirstScreen" component={FirstScreen} />
+            <Stack.Screen name="One_d" component={One_d} />
+            <Stack.Screen name="One_e" component={One_e} />
+            <Stack.Screen name="One_a" component={One_a} />
+            <Stack.Screen name="Two_a" component={Two_a} />
+            <Stack.Screen name="One_b" component={One_b} />
+            <Stack.Screen name="One_c" component={One_c} />
+            <Stack.Screen name="XMEye" component={XMEye} />
+          </Stack.Navigator>
+        ) : null}
+      </NavigationContainer>
+    </>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};
+export default App;
